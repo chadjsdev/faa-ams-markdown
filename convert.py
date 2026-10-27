@@ -38,12 +38,27 @@ def url_index() -> dict[str, str]:
 
 
 def saved_from_url(path: Path) -> str | None:
-    """Read the '<!-- saved from url=(NNNN)URL -->' stamp written by browsers and the save bookmarklet."""
+    """Source URL of a saved web page.
+
+    Prefers the '<!-- saved from url=(NNNN)URL -->' stamp (written by the save-page
+    bookmarklet, and by some browsers on Save As). Falls back to the page's own
+    <link rel="canonical"> or og:url, which covers a plain Ctrl+S save.
+    """
     if path.suffix.lower() not in (".html", ".htm"):
         return None
     with path.open(encoding="utf-8", errors="replace") as f:
-        m = re.search(r"saved from url=\(\d+\)(\S+?)\s*-->", f.read(4096))
-    return m.group(1) if m else None
+        head = f.read(200_000)
+    m = re.search(r"saved from url=\(\d+\)(\S+?)\s*-->", head[:4096])
+    if m:
+        return m.group(1)
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(head, "html.parser")
+    tag = soup.find("link", rel="canonical", href=True)
+    url = tag["href"] if tag else None
+    if not url:
+        og = soup.find("meta", property="og:url", content=True)
+        url = og["content"] if og else None
+    return url if url and url.startswith(("http://", "https://")) else None
 
 
 def file_hash(path: Path) -> str:
@@ -67,7 +82,12 @@ def main() -> int:
     folders = [args.inbox, args.archive] if args.force else [args.inbox]
     archived_hashes = {} if args.force else {
         file_hash(p): p.name for p in args.archive.iterdir() if p.is_file() and not p.name.startswith(".")}
-    for path in sorted(p for d in folders for p in d.rglob("*") if p.is_file() and not p.name.startswith(".")):
+    def wanted(p: Path, root: Path) -> bool:
+        # Skip dotfiles and the "<page>_files" asset folders Chrome/Edge create next to a saved page.
+        return p.is_file() and not p.name.startswith(".") \
+            and not any(part.lower().endswith("_files") for part in p.relative_to(root).parts[:-1])
+
+    for path in sorted(p for d in folders for p in d.rglob("*") if wanted(p, d)):
         target = args.out / f"{slugify(path.stem)}.md"
         archived = args.archive / path.name
         same = archived_hashes.get(file_hash(path)) if path.parent != args.archive else None

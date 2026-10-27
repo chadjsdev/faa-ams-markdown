@@ -14,7 +14,7 @@ import sys
 import webbrowser
 
 from common import DOC_EXTS
-from settings import CHECKLIST, CURATED, INBOX
+from settings import CHECKLIST, CURATED, INBOX, SAVE_PAGE_METHOD
 
 
 def main() -> int:
@@ -32,7 +32,9 @@ def main() -> int:
     rows = []
     for i, (label, url) in enumerate(items, 1):
         page = not url.lower().split("?")[0].endswith(DOC_EXTS)
-        hint = ' <span class="hint">web page: use the bookmarklet (or Save As if it shows a PDF)</span>' if page else ""
+        how = ("Ctrl+S, Webpage, Complete" if SAVE_PAGE_METHOD == "save-as"
+               else "use the bookmarklet, or Save As if it shows a PDF")
+        hint = f' <span class="hint">web page: {how}</span>' if page else ""
         rows.append(f'<li><label><input type="checkbox"> <a href="{html.escape(url)}">{html.escape(label)}</a></label>{hint}</li>')
         print(f"{i:2d}. {label}: {url}")
 

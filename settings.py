@@ -19,3 +19,8 @@ OTHER_NETWORK_HOSTS = (
     "sep.faa.gov", "ksn2.faa.gov", "my.faa.gov", "employees.faa.gov", "tableau.faa.gov",
     "nasea.faa.gov", "technet.faa.gov", "nas.amc.faa.gov", "sharepoint.com",
 )
+
+# How you save web pages: "bookmarklet" (one click; needs javascript: bookmarks allowed)
+# or "save-as" (Ctrl+S -> Webpage, Complete; works where bookmarklets are blocked).
+# Only changes the hint shown by next_batch.py.
+SAVE_PAGE_METHOD = "bookmarklet"

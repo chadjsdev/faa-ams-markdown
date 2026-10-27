@@ -37,6 +37,11 @@ TRACK_HOSTS = ("faa.gov", "sharepoint.com")
 
 # Hosts this machine can't reach; links to them are reported as "other network".
 OTHER_NETWORK_HOSTS = ()
+
+# How you save web pages: "bookmarklet" (one click; needs javascript: bookmarks allowed)
+# or "save-as" (Ctrl+S -> Webpage, Complete; works where bookmarklets are blocked).
+# Only changes the hint shown by next_batch.py.
+SAVE_PAGE_METHOD = "save-as"
 '''
 
 REQUIREMENTS = """beautifulsoup4

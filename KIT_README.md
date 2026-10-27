@@ -31,19 +31,33 @@ Legacy `.doc` files need one of: LibreOffice, or Microsoft Word plus
 `pip install pywin32`. Otherwise, open the file in Word, Save As `.docx`, and
 drop that in `inbox/`.
 
-## Save-page bookmarklet
+## Saving web pages
 
-Create a bookmark in Edge or Chrome and paste the contents of
-`curated/save_page_bookmarklet.txt` as its URL. On any page, click it:
+`curated/save_page_bookmarklet.txt` is **not a script you run**. It's one line of
+JavaScript to paste as the URL of a browser bookmark. Open it in Notepad, copy
+the whole line, then in Chrome press Ctrl+Shift+O → ⋮ → Add new bookmark, name
+it "Save for FAA" and paste the line as the URL. On any page, click the
+bookmark: a green banner says what it saved, a red one says what failed, and the
+file lands in your Downloads folder.
 
-- web pages download as `<page-name>.html` with the source URL stamped inside
-  (it saves the page as rendered, so SharePoint and other script-built pages
-  keep their content)
-- PDFs open in the browser viewer download as the real PDF
+- It saves the page as rendered, so SharePoint and other script-built pages keep
+  their content, and it stamps the source URL inside the file.
+- **Managed browsers often block `javascript:` bookmarks.** If clicking does
+  nothing at all (no banner), check `chrome://policy` for `URLBlocklist` or
+  `JavaScriptBlockedForUrls`. If it's blocked, use Ctrl+S instead.
 
-If your browser blocks `javascript:` bookmarks, use Ctrl+S → "Webpage, HTML
-only" instead. The converter still works; you may need to rename the file to
-match its link so the source URL is recorded.
+**Ctrl+S route (works without JavaScript):** press Ctrl+S, set "Save as type" to
+**Webpage, Complete** (not "HTML only", which saves the page before its scripts
+run and comes out empty on SharePoint-style pages), and save into `inbox\`.
+Chrome also creates a `<page name>_files` folder; `convert.py` ignores those
+folders. Source URLs: the bookmarklet stamps the URL into the file; a Ctrl+S
+file has no stamp, so `convert.py` falls back to the page's own canonical link.
+If it prints `(no source URL match)`, the file is already converted and
+archived without a URL. To fix it, add this as the first line of the saved
+`.html`: `<!-- saved from url=(0000)https://the/page/url -->`, then run
+`convert.py --force` (the number in parentheses is ignored).
+Last resort for stubborn pages: Ctrl+P → Save as PDF (no source URL; the
+checklist matches it by filename if you name it like the link).
 
 ## The loop
 
