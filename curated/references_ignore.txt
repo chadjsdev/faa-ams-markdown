@@ -1,0 +1,4 @@
+# Converted documents whose outbound links references.py should NOT count as
+# "untracked" (link-heavy index pages). One output name (without .md) per line.
+redac                 # REDAC page: ~2,000 meeting-minute links
+ppg-sow-did-library   # DID Library: every Data Item Description; pick DIDs by hand

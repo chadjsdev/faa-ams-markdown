@@ -1,0 +1,32 @@
+# Scoped crawl of www.faa.gov. crawl.py respects robots.txt regardless of this file.
+
+# Add contact info here if you want site operators to be able to reach you.
+user_agent: "FAA-SE-Study-Crawler/0.1 (personal research)"
+delay_seconds: 2.0        # pause between requests
+max_pages: 300            # HTML pages per run
+max_depth: 3              # link hops from a seed
+download_documents: true  # fetch PDFs/DOCX linked from in-scope pages and convert them
+max_document_mb: 50
+
+seeds:
+  - https://www.faa.gov/about/office_org/headquarters_offices/ang/r2r
+  - https://www.faa.gov/nextgen/nas-enterprise-architecture-infrastructure-roadmaps
+
+# HTML pages are only crawled if their path starts with one of these.
+allowed_prefixes:
+  - /about/office_org/headquarters_offices/ang/r2r
+  - /about/office_org/headquarters_offices/ang/architecting
+  - /about/officeorg/headquartersoffices/ang/nas-enterprise-architecture
+  - /nextgen/nas-enterprise-architecture
+
+# Documents linked from in-scope pages are downloaded if their path starts with one of these.
+document_prefixes:
+  - /sites/faa.gov/files/
+  - /documentLibrary/
+  - /nextgen/
+
+# Skip any URL containing one of these substrings.
+exclude:
+  - /search
+  - "?page="
+  - /newsroom

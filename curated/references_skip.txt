@@ -1,0 +1,12 @@
+# URL patterns (regular expressions, case-insensitive) that references.py marks
+# "skipped": known-dead locations and low-value link families. One per line.
+tc\.faa\.gov/its/worldpac/       # dead: old Tech Center standards folder (all 404)
+ipa\.faa\.gov/                   # dead or FAA-internal investment-analysis site
+fast\.faa\.gov/flowcharts/       # interactive image flowcharts; don't convert to text
+/sowgen_docs/templates/          # ~60 SOW templates, mostly facilities/admin services
+/sowgen_docs/dids/               # DID library: add the few you want by hand
+/r2r/roadmaps/nas.*Roadmaps.*-   # per-domain roadmap sections (subsets of full roadmaps)
+_CIP_Complete_|CIP-Overview-20(1|2[0-3])|FY\d\d-\d\d_CIP   # older Capital Investment Plans
+narp-fy|national-aviation-research-plan-fy|fy22-26-narp|annual-review|Annual_Review   # older NARPs / R&D reviews
+/jobs/|/newsroom/turbulence|visitor_info|usmap\.jsp|business_opportunities|plain_language|economic-impact|reauthorization|obstruction_evaluation
+/about/plans_reports$|/air_traffic$|/orders_notices/?$|handbooks_manuals/?$|/about/budget$|/nextgen$|/go/REDAC

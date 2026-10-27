@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+inbox/
+archive/
+dist/faa-md-kit/
+curated/next_batch*.html
+.DS_Store

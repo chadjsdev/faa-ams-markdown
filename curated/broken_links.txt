@@ -1,0 +1,12 @@
+# Links that failed to download (404 etc.). One URL per line; text after '#' is a note.
+# status.py reports these and finds which archived pages/PDFs reference them.
+# Add one with:  .venv/bin/python status.py --broken URL "note"
+https://fast.faa.gov/docs/pmptemplate.docx  # 404 on 2026-10-27; try pmptemplate.doc instead
+https://www.faa.gov/air_traffic/publications/media/ATO-SMS-Manual.pdf  # 404 (2026-10-27); found via web search, not linked from FAST. Likely replaced by 202607-ATO-SMS-Manual.pdf
+http://www.tc.faa.gov/its/worldpac/standards/faa-std-025f.pdf  # 404 (2026-10-27)
+http://www.tc.faa.gov/its/worldpac/standards/faa-std-067.pdf  # 404; whole tc.faa.gov/its/worldpac/standards/ folder appears gone (2026-10-27)
+https://www.faa.gov/nextgen/media/futureOfTheNAS.pdf  # 404 (2026-10-27)
+http://www.tc.faa.gov/its/worldpac/standards/faa-hdbk-006c.pdf  # 404; same dead tc.faa.gov worldpac folder (2026-10-27)
+https://fast.faa.gov/AMSTailoring.cfm  # 404 (2026-10-27)
+https://fast.faa.gov/AMSPolicyVsGuidance.cfm  # 404 (2026-10-27)
+http://www.ipa.faa.gov/Displayblob.cfm?filename=BUSINESS%20CASE%20ANALYSIS%20GUIDANCE%2010%5F1%5F15%2EDOCX  # 404 (also tried https with _ instead of %5F); ipa.faa.gov links likely all dead (2026-10-27)
